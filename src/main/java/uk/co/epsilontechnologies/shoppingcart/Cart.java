@@ -1,5 +1,6 @@
 package uk.co.epsilontechnologies.shoppingcart;
 
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -10,8 +11,23 @@ public class Cart {
 
     private final List<Product> products = new ArrayList<>();
 
-    public void add(final Product... products) {
-        this.products.addAll(Arrays.asList(products));
+    private final PrintStream printStream;
+
+    public Cart() {
+        this(System.out);
+    }
+
+    public Cart(final PrintStream printStream) {
+        this.printStream = printStream;
+    }
+
+    public void scan(final Product product) {
+        this.products.add(product);
+        this.printStream.println(String.format("£ %.2f", getTotalCost()));
+    }
+
+    public void scanAll(final Product... products) {
+        Arrays.asList(products).forEach(this::scan);
     }
 
     public BigDecimal getTotalCost() {

@@ -2,9 +2,12 @@ package uk.co.epsilontechnologies.shoppingcart;
 
 import org.junit.Test;
 
+import java.io.PrintStream;
 import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static uk.co.epsilontechnologies.shoppingcart.Product.*;
 
 public class CartTest {
@@ -79,9 +82,17 @@ public class CartTest {
         assertTotalCartCost("1.45", APPLE, APPLE, ORANGE, APPLE);
     }
 
+    @Test
+    public void shouldPrintRunningTotalWhenItemIsScanned() {
+        final PrintStream mockPrintStream = mock(PrintStream.class);
+        final Cart cart = new Cart(mockPrintStream);
+        cart.scan(APPLE);
+        verify(mockPrintStream).println("£ 0.60");
+    }
+
     private void assertTotalCartCost(final String expectedTotalCost, final Product... products) {
         final Cart cart = new Cart();
-        cart.add(products);
+        cart.scanAll(products);
         assertEquals(new BigDecimal(expectedTotalCost), cart.getTotalCost());
     }
 
