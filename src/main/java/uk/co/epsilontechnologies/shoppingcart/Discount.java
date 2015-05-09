@@ -50,12 +50,12 @@ public class Discount {
                 .limit(freeCount)
                 .collect(toList());
 
+        final BigDecimal newDiscount = discount.add(Product.sum(freeProducts));
+
         final List<Product> productsRemaining = productsRemainingAfterBuy
                 .stream()
                 .skip(freeProducts.size())
                 .collect(toList());
-
-        final BigDecimal newDiscount = discount.add(Product.sum(freeProducts));
 
         return sumDiscount(newDiscount, productsRemaining, buyCount, freeCount); // recursive
     }
