@@ -2,7 +2,9 @@ package uk.co.epsilontechnologies.shoppingcart;
 
 import java.io.PrintStream;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static uk.co.epsilontechnologies.shoppingcart.Product.*;
 
@@ -14,10 +16,6 @@ public class Cart {
 
     private final List<Discount> discounts;
     private final PrintStream printStream;
-
-    public Cart() {
-        this(System.out);
-    }
 
     public Cart(final PrintStream printStream) {
         this(
