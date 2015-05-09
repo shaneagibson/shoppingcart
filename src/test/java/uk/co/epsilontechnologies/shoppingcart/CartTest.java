@@ -7,18 +7,26 @@ import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 
 public class CartTest {
-    
+
     @Test
     public void shouldCalculateTotalCostOfZeroForEmptyCart() {
+        assertTotalCartCost("0.00");
+    }
 
-        // arrange
-        final Cart underTest = new Cart();
+    @Test
+    public void shouldCalculateTotalCostOfSixtyPenceForOneApple() {
+        assertTotalCartCost("0.60", Product.APPLE);
+    }
 
-        // act
-        final BigDecimal totalCost = underTest.getTotalCost();
+    @Test
+    public void shouldCalculateTotalCostOfTwentyFivePenceForOneOrange() {
+        assertTotalCartCost("0.25", Product.ORANGE);
+    }
 
-        // assert
-        assertEquals(new BigDecimal("0.00"), totalCost);
+    private void assertTotalCartCost(final String expectedTotalCost, final Product... products) {
+        final Cart cart = new Cart();
+        cart.add(products);
+        assertEquals(new BigDecimal(expectedTotalCost), cart.getTotalCost());
     }
 
 }
