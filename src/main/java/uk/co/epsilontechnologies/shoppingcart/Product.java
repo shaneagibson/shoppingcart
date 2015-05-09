@@ -6,7 +6,8 @@ public enum Product {
 
     APPLE("0.60"),
     ORANGE("0.25"),
-    BANANA("0.20");
+    BANANA("0.20"),
+    MELON("1.00");
 
     private final BigDecimal unitPrice;
 

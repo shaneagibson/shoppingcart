@@ -16,9 +16,13 @@ public class Cart {
 
     public BigDecimal getTotalCost() {
         final BigDecimal preDiscountPrice = sumUnitPrices(this.products);
-        final BigDecimal applesDiscount = discountForBuyXGetYFree(1, 1, APPLE, BANANA);
+        final BigDecimal applesAndBananasDiscount = discountForBuyXGetYFree(1, 1, APPLE, BANANA);
         final BigDecimal orangesDiscount = discountForBuyXGetYFree(3, 2, ORANGE);
-        return preDiscountPrice.subtract(applesDiscount).subtract(orangesDiscount);
+        final BigDecimal melonsDiscount = discountForBuyXGetYFree(3, 2, MELON);
+        return preDiscountPrice
+                .subtract(applesAndBananasDiscount)
+                .subtract(orangesDiscount)
+                .subtract(melonsDiscount);
     }
 
     private BigDecimal discountForBuyXGetYFree(final int x, final int y, final Product... appliesTo) {
@@ -37,7 +41,7 @@ public class Cart {
 
         final List<Product> productsRemainingAfterBuy = products
                 .stream()
-                .sorted(sortHighestToLowest()) // buy highest priced items first
+                .sorted(sortLowestToHighest().reversed()) // buy highest priced items first
                 .skip(buy)
                 .collect(toList());
 
@@ -62,10 +66,6 @@ public class Cart {
                 .stream()
                 .map(product -> product.getUnitPrice())
                 .reduce(new BigDecimal("0.00"), BigDecimal::add);
-    }
-
-    private Comparator<? super Product> sortHighestToLowest() {
-        return (product1, product2) -> -1 * product1.getUnitPrice().compareTo(product2.getUnitPrice());
     }
 
     private Comparator<? super Product> sortLowestToHighest() {

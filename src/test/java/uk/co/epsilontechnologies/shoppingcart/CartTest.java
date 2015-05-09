@@ -5,9 +5,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
-import static uk.co.epsilontechnologies.shoppingcart.Product.APPLE;
-import static uk.co.epsilontechnologies.shoppingcart.Product.BANANA;
-import static uk.co.epsilontechnologies.shoppingcart.Product.ORANGE;
+import static uk.co.epsilontechnologies.shoppingcart.Product.*;
 
 public class CartTest {
 
@@ -29,6 +27,11 @@ public class CartTest {
     @Test
     public void shouldCalculateTotalCostOfTwentyFivePenceForOneOrange() {
         assertTotalCartCost("0.25", ORANGE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfOnePoundForOneMelon() {
+        assertTotalCartCost("1.00", MELON);
     }
 
     @Test
@@ -64,6 +67,11 @@ public class CartTest {
     @Test
     public void shouldCalculateTotalCostOfSeventyFivePenceForFiveOrangesUnderBuyThreeGetTwoFree() {
         assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE, ORANGE, ORANGE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfThreePoundsForFiveMelonsUnderBuyThreeGetTwoFree() {
+        assertTotalCartCost("3.00", MELON, MELON, MELON, MELON, MELON);
     }
 
     @Test
