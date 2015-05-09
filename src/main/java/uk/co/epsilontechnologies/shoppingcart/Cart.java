@@ -1,9 +1,7 @@
 package uk.co.epsilontechnologies.shoppingcart;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 import static uk.co.epsilontechnologies.shoppingcart.Product.*;
@@ -18,13 +16,16 @@ public class Cart {
 
     public BigDecimal getTotalCost() {
         final BigDecimal preDiscountPrice = sumUnitPrices(this.products);
-        final BigDecimal applesDiscount = discountForBuyXGetYFree(1, 1, APPLE);
+        final BigDecimal applesDiscount = discountForBuyXGetYFree(1, 1, APPLE, BANANA);
         final BigDecimal orangesDiscount = discountForBuyXGetYFree(3, 2, ORANGE);
         return preDiscountPrice.subtract(applesDiscount).subtract(orangesDiscount);
     }
 
-    private BigDecimal discountForBuyXGetYFree(final int x, final int y, final Product appliesTo) {
-        final List<Product> applicableItems = products.stream().filter(product -> product == appliesTo).collect(toList());
+    private BigDecimal discountForBuyXGetYFree(final int x, final int y, final Product... appliesTo) {
+        final List<Product> applicableItems = products
+                .stream()
+                .filter(product -> Arrays.asList(appliesTo).contains(product))
+                .collect(toList());
         return sumDiscount(new BigDecimal("0.00"), applicableItems, x, y);
     }
 
@@ -34,12 +35,22 @@ public class Cart {
             return discount;
         }
 
-        final List<Product> productsRemainingAfterBuy = products.subList(buy, products.size());
+        final List<Product> productsRemainingAfterBuy = products
+                .stream()
+                .sorted(sortHighestToLowest()) // buy highest priced items first
+                .skip(buy)
+                .collect(toList());
 
-        final int numberOfFreeProducts = productsRemainingAfterBuy.size() < free ? free - productsRemainingAfterBuy.size() : free;
+        final List<Product> freeProducts = productsRemainingAfterBuy
+                .stream()
+                .sorted(sortLowestToHighest()) // discount lowest priced items first
+                .limit(free)
+                .collect(toList());
 
-        final List<Product> freeProducts = productsRemainingAfterBuy.subList(0, numberOfFreeProducts);
-        final List<Product> productsRemaining = productsRemainingAfterBuy.subList(numberOfFreeProducts, productsRemainingAfterBuy.size());
+        final List<Product> productsRemaining = productsRemainingAfterBuy
+                .stream()
+                .skip(freeProducts.size())
+                .collect(toList());
 
         final BigDecimal newDiscount = discount.add(sumUnitPrices(freeProducts));
 
@@ -51,6 +62,14 @@ public class Cart {
                 .stream()
                 .map(product -> product.getUnitPrice())
                 .reduce(new BigDecimal("0.00"), BigDecimal::add);
+    }
+
+    private Comparator<? super Product> sortHighestToLowest() {
+        return (product1, product2) -> -1 * product1.getUnitPrice().compareTo(product2.getUnitPrice());
+    }
+
+    private Comparator<? super Product> sortLowestToHighest() {
+        return (product1, product2) -> product1.getUnitPrice().compareTo(product2.getUnitPrice());
     }
 
 }

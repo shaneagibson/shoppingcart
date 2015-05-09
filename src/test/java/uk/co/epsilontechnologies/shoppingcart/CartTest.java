@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
 import static uk.co.epsilontechnologies.shoppingcart.Product.APPLE;
+import static uk.co.epsilontechnologies.shoppingcart.Product.BANANA;
 import static uk.co.epsilontechnologies.shoppingcart.Product.ORANGE;
 
 public class CartTest {
@@ -21,6 +22,11 @@ public class CartTest {
     }
 
     @Test
+    public void shouldCalculateTotalCostOfTwentyPenceForOneBanana() {
+        assertTotalCartCost("0.20", BANANA);
+    }
+
+    @Test
     public void shouldCalculateTotalCostOfTwentyFivePenceForOneOrange() {
         assertTotalCartCost("0.25", ORANGE);
     }
@@ -28,6 +34,21 @@ public class CartTest {
     @Test
     public void shouldCalculateTotalCostOfSixtyPenceForTwoApplesUnderBOGOF() {
         assertTotalCartCost("0.60", APPLE, APPLE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfSixtyPenceForOneBananaAndOneAppleUnderJointBOGOF() {
+        assertTotalCartCost("0.60", APPLE, BANANA);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfOnePoundAndTwentyPenceForOneBananaAndTwoApplesUnderJointBOGOF() {
+        assertTotalCartCost("1.20", APPLE, BANANA, APPLE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfOnePoundAndTwentyPenceForOneBananaAndTwoApplesUnderJointBOGOFWithCheapestItemFree() {
+        assertTotalCartCost("1.20", APPLE, APPLE, BANANA);
     }
 
     @Test

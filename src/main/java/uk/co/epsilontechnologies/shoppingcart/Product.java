@@ -5,7 +5,8 @@ import java.math.BigDecimal;
 public enum Product {
 
     APPLE("0.60"),
-    ORANGE("0.25");
+    ORANGE("0.25"),
+    BANANA("0.20");
 
     private final BigDecimal unitPrice;
 
