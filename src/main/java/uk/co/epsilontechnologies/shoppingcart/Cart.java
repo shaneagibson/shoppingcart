@@ -3,7 +3,6 @@ package uk.co.epsilontechnologies.shoppingcart;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.String.format;
