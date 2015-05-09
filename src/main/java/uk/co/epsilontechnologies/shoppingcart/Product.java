@@ -1,6 +1,7 @@
 package uk.co.epsilontechnologies.shoppingcart;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public enum Product {
 
@@ -17,6 +18,13 @@ public enum Product {
 
     public BigDecimal getUnitPrice() {
         return this.unitPrice;
+    }
+
+    public static BigDecimal sum(final List<Product> products) {
+        return products
+                .stream()
+                .map(product -> product.getUnitPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }

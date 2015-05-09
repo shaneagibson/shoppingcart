@@ -14,7 +14,7 @@ public class CartTest {
 
     @Test
     public void shouldCalculateTotalCostOfZeroForEmptyCart() {
-        assertTotalCartCost("0.00");
+        assertTotalCartCost("0");
     }
 
     @Test
@@ -91,7 +91,8 @@ public class CartTest {
     }
 
     private void assertTotalCartCost(final String expectedTotalCost, final Product... products) {
-        final Cart cart = new Cart();
+        final PrintStream mockPrintStream = mock(PrintStream.class);
+        final Cart cart = new Cart(mockPrintStream);
         cart.scanAll(products);
         assertEquals(new BigDecimal(expectedTotalCost), cart.getTotalCost());
     }
