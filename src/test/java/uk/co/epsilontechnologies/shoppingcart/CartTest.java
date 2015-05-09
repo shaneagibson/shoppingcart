@@ -26,8 +26,28 @@ public class CartTest {
     }
 
     @Test
-    public void shouldCalculateTotalCostOfTwoPoundsAndFivePenceForThreeApplesAndOneOrange() {
-        assertTotalCartCost("2.05", APPLE, APPLE, ORANGE, APPLE);
+    public void shouldCalculateTotalCostOfSixtyPenceForTwoApplesUnderBOGOF() {
+        assertTotalCartCost("0.60", APPLE, APPLE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfSeventyFivePenceForThreeOranges() {
+        assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfSeventyFivePenceForFourOrangesUnderBuyThreeGetTwoFree() {
+        assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE, ORANGE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfSeventyFivePenceForFiveOrangesUnderBuyThreeGetTwoFree() {
+        assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE, ORANGE, ORANGE);
+    }
+
+    @Test
+    public void shouldCalculateTotalCostOfOnePoundAndFortyFivePenceForThreeApplesAndOneOrange() {
+        assertTotalCartCost("1.45", APPLE, APPLE, ORANGE, APPLE);
     }
 
     private void assertTotalCartCost(final String expectedTotalCost, final Product... products) {
