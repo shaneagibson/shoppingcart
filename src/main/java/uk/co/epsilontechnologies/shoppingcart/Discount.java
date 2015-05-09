@@ -29,10 +29,10 @@ public class Discount {
                 .filter(product -> appliesTo.contains(product))
                 .collect(toList());
 
-        return sumDiscount(BigDecimal.ZERO, applicableItems, buyCount, freeCount);
+        return sumDiscount(BigDecimal.ZERO, applicableItems);
     }
 
-    private BigDecimal sumDiscount(final BigDecimal discount, final List<Product> products, final int buyCount, final int freeCount) {
+    private BigDecimal sumDiscount(final BigDecimal discount, final List<Product> products) {
 
         if (products.size() <= buyCount) {
             return discount;
@@ -57,7 +57,7 @@ public class Discount {
                 .skip(freeProducts.size())
                 .collect(toList());
 
-        return sumDiscount(newDiscount, productsRemaining, buyCount, freeCount); // recursive
+        return sumDiscount(newDiscount, productsRemaining); // recursive
     }
 
     private Comparator<? super Product> sortLowestToHighest() {
