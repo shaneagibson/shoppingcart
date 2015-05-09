@@ -3,6 +3,8 @@ package uk.co.epsilontechnologies.shoppingcart;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static java.math.BigDecimal.ZERO;
+
 public enum Product {
 
     APPLE("0.60"),
@@ -24,7 +26,7 @@ public enum Product {
         return products
                 .stream()
                 .map(product -> product.getUnitPrice())
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(ZERO, BigDecimal::add);
     }
 
 }

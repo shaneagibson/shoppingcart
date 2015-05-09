@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.math.BigDecimal.ZERO;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
+import static uk.co.epsilontechnologies.shoppingcart.Product.sum;
 
 public class Discount {
 
@@ -19,7 +22,7 @@ public class Discount {
             final Product... appliesTo) {
         this.buyCount = buyCount;
         this.freeCount = freeCount;
-        this.appliesTo = Arrays.asList(appliesTo);
+        this.appliesTo = asList(appliesTo);
     }
 
     public BigDecimal apply(final List<Product> products) {
@@ -29,7 +32,7 @@ public class Discount {
                 .filter(product -> appliesTo.contains(product))
                 .collect(toList());
 
-        return sumDiscount(BigDecimal.ZERO, applicableItems);
+        return sumDiscount(ZERO, applicableItems);
     }
 
     private BigDecimal sumDiscount(final BigDecimal discount, final List<Product> products) {
@@ -50,7 +53,7 @@ public class Discount {
                 .limit(freeCount)
                 .collect(toList());
 
-        final BigDecimal newDiscount = discount.add(Product.sum(freeProducts));
+        final BigDecimal newDiscount = discount.add(sum(freeProducts));
 
         final List<Product> productsRemaining = productsRemainingAfterBuy
                 .stream()

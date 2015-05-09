@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static uk.co.epsilontechnologies.shoppingcart.Product.*;
 
 public class Cart {
@@ -27,21 +29,21 @@ public class Cart {
 
     public Cart(final PrintStream printStream, final Discount... discounts) {
         this.printStream = printStream;
-        this.discounts = Arrays.asList(discounts);
+        this.discounts = asList(discounts);
     }
 
     public void scan(final Product product) {
         this.products.add(product);
-        this.printStream.println(String.format(PRICE_FORMAT, getTotalCost()));
+        this.printStream.println(format(PRICE_FORMAT, getTotalCost()));
     }
 
     public void scanAll(final Product... products) {
-        Arrays.asList(products).forEach(this::scan);
+        asList(products).forEach(this::scan);
     }
 
     public BigDecimal getTotalCost() {
 
-        final BigDecimal preDiscountPrice = Product.sum(this.products);
+        final BigDecimal preDiscountPrice = sum(this.products);
 
         final BigDecimal discountPrice = discounts
                 .stream()
