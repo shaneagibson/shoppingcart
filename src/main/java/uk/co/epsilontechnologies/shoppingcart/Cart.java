@@ -22,8 +22,8 @@ public class Cart {
         this(
             printStream,
             new Discount(1, 1, APPLE, BANANA),
-            new Discount(3, 2, ORANGE),
-            new Discount(3, 2, MELON));
+            new Discount(2, 1, ORANGE),
+            new Discount(2, 1, MELON));
     }
 
     public Cart(final PrintStream printStream, final Discount... discounts) {
@@ -46,7 +46,7 @@ public class Cart {
 
         final BigDecimal discountPrice = discounts
                 .stream()
-                .map(discount -> discount.apply(this.products))
+                .map(discount -> discount.calculate(this.products))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return preDiscountPrice.subtract(discountPrice);

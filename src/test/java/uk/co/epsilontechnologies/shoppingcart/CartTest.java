@@ -58,23 +58,23 @@ public class CartTest {
     }
 
     @Test
-    public void shouldCalculateTotalCostOfSeventyFivePenceForThreeOranges() {
-        assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE);
+    public void shouldCalculateTotalCostOfFiftyPenceForThreeOranges() {
+        assertTotalCartCost("0.50", ORANGE, ORANGE, ORANGE);
     }
 
     @Test
-    public void shouldCalculateTotalCostOfSeventyFivePenceForFourOrangesUnderBuyThreeGetTwoFree() {
+    public void shouldCalculateTotalCostOfSeventyFivePenceForFourOrangesUnderBuyTwoGetOneFree() {
         assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE, ORANGE);
     }
 
     @Test
-    public void shouldCalculateTotalCostOfSeventyFivePenceForFiveOrangesUnderBuyThreeGetTwoFree() {
-        assertTotalCartCost("0.75", ORANGE, ORANGE, ORANGE, ORANGE, ORANGE);
+    public void shouldCalculateTotalCostOfOnePoundForFiveOrangesUnderBuyTwoGetOneFree() {
+        assertTotalCartCost("1.00", ORANGE, ORANGE, ORANGE, ORANGE, ORANGE);
     }
 
     @Test
-    public void shouldCalculateTotalCostOfThreePoundsForFiveMelonsUnderBuyThreeGetTwoFree() {
-        assertTotalCartCost("3.00", MELON, MELON, MELON, MELON, MELON);
+    public void shouldCalculateTotalCostOfThreePoundsForFiveMelonsUnderBuyTwoGetOneFree() {
+        assertTotalCartCost("4.00", MELON, MELON, MELON, MELON, MELON);
     }
 
     @Test
