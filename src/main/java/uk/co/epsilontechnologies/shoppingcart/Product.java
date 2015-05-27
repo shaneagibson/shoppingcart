@@ -22,11 +22,4 @@ public enum Product {
         return this.unitPrice;
     }
 
-    public static BigDecimal sum(final List<Product> products) {
-        return products
-                .stream()
-                .map(product -> product.getUnitPrice())
-                .reduce(ZERO, BigDecimal::add);
-    }
-
 }

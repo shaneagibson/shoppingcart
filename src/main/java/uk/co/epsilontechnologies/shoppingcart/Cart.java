@@ -4,8 +4,10 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.lang.String.format;
+import static java.math.BigDecimal.ZERO;
 import static java.util.Arrays.asList;
 import static uk.co.epsilontechnologies.shoppingcart.Product.*;
 
@@ -42,14 +44,17 @@ public class Cart {
 
     public BigDecimal getTotalCost() {
 
-        final BigDecimal preDiscountPrice = sum(this.products);
-
-        final BigDecimal discountPrice = discounts
-                .stream()
-                .map(discount -> discount.calculate(this.products))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        final BigDecimal preDiscountPrice = sumAmounts(this.products, product -> product.getUnitPrice());
+        final BigDecimal discountPrice = sumAmounts(this.discounts, discount -> discount.calculate(this.products));
 
         return preDiscountPrice.subtract(discountPrice);
+    }
+
+    private <T> BigDecimal sumAmounts(final List<T> summableList, final Function<T,BigDecimal> mapper) {
+        return summableList
+                .stream()
+                .map(mapper)
+                .reduce(ZERO, BigDecimal::add);
     }
 
 }
