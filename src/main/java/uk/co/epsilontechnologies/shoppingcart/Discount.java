@@ -25,20 +25,23 @@ public class Discount {
 
     public BigDecimal calculate(final List<Product> products) {
 
-        final List<Product> filteredProducts = products.stream().filter(product -> appliesTo.contains(product)).collect(toList());
+        final List<Product> filteredProducts = products
+                .stream()
+                .filter(product -> appliesTo.contains(product))
+                .collect(toList());
 
         final int numberOfPaidProducts = ((filteredProducts.size() / (buyCount + freeCount)) * buyCount) + (filteredProducts.size() % (buyCount + freeCount));
 
         return filteredProducts
                 .stream()
-                .sorted(sortHighestToLowest())
+                .sorted(highestToLowest())
                 .map(product -> product.getUnitPrice())
                 .skip(numberOfPaidProducts)
                 .reduce(ZERO, BigDecimal::add);
     }
 
-    private Comparator<? super Product> sortHighestToLowest() {
-        return (product1, product2) -> - product1.getUnitPrice().compareTo(product2.getUnitPrice());
+    private Comparator<? super Product> highestToLowest() {
+        return (product1, product2) -> product1.getUnitPrice().compareTo(product2.getUnitPrice()) * -1;
     }
 
 }

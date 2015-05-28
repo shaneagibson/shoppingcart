@@ -73,7 +73,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldCalculateTotalCostOfThreePoundsForFiveMelonsUnderBuyTwoGetOneFree() {
+    public void shouldCalculateTotalCostOfFourPoundsForFiveMelonsUnderBuyTwoGetOneFree() {
         assertTotalCartCost("4.00", MELON, MELON, MELON, MELON, MELON);
     }
 
